@@ -50,8 +50,10 @@ is, leaves are not necessarily less than branches and vice versa.
 [Branch 19 (Leaf 1 'b') (Leaf 2 'c'),Leaf 25 'd',Leaf 42 'a']
 ```
 
-3. Merge a list of `HTree` nodes into a single `Maybe HTree`. If the input
-is empty, return `Nothing`. If the input contains a single element, return a singleton list as a `Maybe`. Otherwise, do the following: 
+3. Merge a list of `HTree` nodes into a single `Maybe HTree`. If the
+input is empty, return `Nothing`. If the input contains a single
+element, return a singleton list as a `Maybe`. Otherwise, do the
+following:
     * create a `Branch` node from the first two elements in the input,
 	* use your `insert` function to insert this new
       element in the right place in the new list, which is formed of the old 
@@ -134,8 +136,3 @@ Just (Branch 86 (Leaf 42 'a') (Branch 44 (Branch 19 (Leaf 1 'b') (Leaf 2 'c')) (
     *Huffman Data.Maybe> decode t path
     "aabba c"
     ```
-
-
-
-
-
