@@ -33,60 +33,60 @@ is, leaves are not necessarily less than branches and vice versa.
 1. Complete the `ftable` function which constructs the sorted
    frequency table for the input `[a]`. 
    
-  ```haskell
-  *Huffman> fTable "aabba c"
-  [(' ',1),('c',1),('b',2),('a',3)]
-  ```
+   ```haskell
+   *Huffman> fTable "aabba c"
+   [(' ',1),('c',1),('b',2),('a',3)]
+   ```
 
-  There are various ways to approach the problem. A nice way to do it
-  is to begin by creating a
-  [Map](https://hackage.haskell.org/package/containers-0.4.0.0/docs/Data-Map.html)
-  from unique values in the data (the type of these values is `Char`
-  in the example above but it could be any type in the `Eq`
-  typeclass). Then, for every element in the input we want to do one
-  of two things: if it is the first time we have seen it, insert it as
-  a new key in the map with the value 1, or, if this is already a key
-  in the map, increase the count by 1. We could do this with an `if`
-  statement but there is a function in the Map library that does just
-  what we need:
-  [`insertWith`](https://hackage.haskell.org/package/containers-0.4.0.0/docs/Data-Map.html#v:insertWith).
+   There are various ways to approach the problem. A nice way to do it
+   is to begin by creating a
+   [Map](https://hackage.haskell.org/package/containers-0.4.0.0/docs/Data-Map.html)
+   from unique values in the data (the type of these values is `Char`
+   in the example above but it could be any type in the `Ord`
+   typeclass). Then, for every element in the input we want to do one
+   of two things: if it is the first time we have seen it, insert it
+   as a new key in the map with the value 1, or, if this is already a
+   key in the map, increase the count by 1. We could do this with an
+   `if` statement but there is a function in the Map library that does
+   just what we need:
+   [`insertWith`](https://hackage.haskell.org/package/containers-0.4.0.0/docs/Data-Map.html#v:insertWith).
 
-  Having created the map, we can extract the `(key, value)` pairs (see
-  the `toList` function) and sort them using the
-  [`sortBy`](https://hackage.haskell.org/package/base-4.16.0.0/docs/Data-List.html#v:sortBy)
-  function from `Data.List`.
+   Having created the map, we can extract the `(key, value)` pairs
+   (see the `toList` function) and sort them using the
+   [`sortBy`](https://hackage.haskell.org/package/base-4.16.0.0/docs/Data-List.html#v:sortBy)
+   function from `Data.List`.
 
 
 2. Complete the `insert` function, which inserts a `HTree` node into a
    list sorted by ascending frequency.
 
-```haskell
-*Main> let ts =  [Leaf 42 'a']
-*Huffman> let ts =  insert (Branch 19 (Leaf 1 'b') (Leaf 2 'c')) [Leaf 42 'a']
-*Huffman> ts
-[Branch 19 (Leaf 1 'b') (Leaf 2 'c'),Leaf 42 'a']
-*Huffman> insert (Leaf 25 'd') ts
-[Branch 19 (Leaf 1 'b') (Leaf 2 'c'),Leaf 25 'd',Leaf 42 'a']
-```
+   ```haskell
+   *Main> let ts =  [Leaf 42 'a']
+   *Huffman> let ts =  insert (Branch 19 (Leaf 1 'b') (Leaf 2 'c')) [Leaf 42 'a']
+   *Huffman> ts
+   [Branch 19 (Leaf 1 'b') (Leaf 2 'c'),Leaf 42 'a']
+   *Huffman> insert (Leaf 25 'd') ts
+   [Branch 19 (Leaf 1 'b') (Leaf 2 'c'),Leaf 25 'd',Leaf 42 'a']
+   ```
 
 3. Merge a list of `HTree` nodes into a single `Maybe HTree`. If the
-input is empty, return `Nothing`. If the input contains a single
-element, return a singleton list as a `Maybe`. Otherwise, do the
-following:
+   input is empty, return `Nothing`. If the input contains a single
+   element, return a singleton list as a `Maybe`. Otherwise, do the
+   following:
     * create a `Branch` node from the first two elements in the input,
 	* use your `insert` function to insert this new
       element in the right place in the new list, which is formed of the old 
       list without its first two elements,
     * call `merge` recursively on the new list.
 
-When merging two nodes, `n1` and `n2`, the node with the lowest frequency
-should be the left-hand child in the new `Branch` node.
+   When merging two nodes, `n1` and `n2`, the node with the lowest frequency
+   should be the left-hand child in the new `Branch` node.
 
-```haskell
-*Huffman> let ts = [Branch 19 (Leaf 1 'b') (Leaf 2 'c'),Leaf 25 'd',Leaf 42 'a']
-*Huffman> merge t2
-Just (Branch 86 (Leaf 42 'a') (Branch 44 (Branch 19 (Leaf 1 'b') (Leaf 2 'c')) (Leaf 25 'd')))
-```
+   ```haskell
+   *Huffman> let ts = [Branch 19 (Leaf 1 'b') (Leaf 2 'c'),Leaf 25 'd',Leaf 42 'a']
+   *Huffman> merge t2
+   Just (Branch 86 (Leaf 42 'a') (Branch 44 (Branch 19 (Leaf 1 'b') (Leaf 2 'c')) (Leaf 25 'd')))
+   ```
 4. Complete the `tree` function, which constructs the Huffman tree for
    the input `[a]`. Return `Nothing` if the input is empty.
    Otherwise, do the following:
@@ -95,9 +95,9 @@ Just (Branch 86 (Leaf 42 'a') (Branch 44 (Branch 19 (Leaf 1 'b') (Leaf 2 'c')) (
 	* merge that list into a single tree by calling your `merge`
       function.
 	  
-  You can use the `printMaybeTree` function to display trees:
+   You can use the `printMaybeTree` function to display trees:
   
-```haskell
+   ```haskell
 *Huffman> printMaybeTree $ tree "aabba c"
             7             
             |             
@@ -112,7 +112,7 @@ Just (Branch 86 (Leaf 42 'a') (Branch 44 (Branch 19 (Leaf 1 'b') (Leaf 2 'c')) (
           ------          
          /      \         
        1:'c'  1:' '  
-```
+   ```
 
 5. Complete the `generateCode` function, which retrieves the code
    embodied by a Huffman tree, which is essentially a list of all the
