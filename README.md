@@ -33,10 +33,29 @@ is, leaves are not necessarily less than branches and vice versa.
 1. Complete the `ftable` function which constructs the sorted
    frequency table for the input `[a]`. 
    
-```haskell
-*Huffman> fTable "aabba c"
-[(' ',1),('c',1),('b',2),('a',3)]
-```
+  ```haskell
+  *Huffman> fTable "aabba c"
+  [(' ',1),('c',1),('b',2),('a',3)]
+  ```
+
+  There are various ways to approach the problem. A nice way to do it
+  is to begin by creating a
+  [Map](https://hackage.haskell.org/package/containers-0.4.0.0/docs/Data-Map.html)
+  from unique values in the data (the type of these values is `Char`
+  in the example above but it could be any type in the `Eq`
+  typeclass). Then, for every element in the input we want to do one
+  of two things: if it is the first time we have seen it, insert it as
+  a new key in the map with the value 1, or, if this is already a key
+  in the map, increase the count by 1. We could do this with an `if`
+  statement but there is a function in the Map library that does just
+  what we need:
+  [`insertWith`](https://hackage.haskell.org/package/containers-0.4.0.0/docs/Data-Map.html#v:insertWith).
+
+  Having created the map, we can extract the `(key, value)` pairs (see
+  the `toList` function) and sort them using the
+  [`sortBy`](https://hackage.haskell.org/package/base-4.16.0.0/docs/Data-List.html#v:sortBy)
+  function from `Data.List`.
+
 
 2. Complete the `insert` function, which inserts a `HTree` node into a
    list sorted by ascending frequency.
