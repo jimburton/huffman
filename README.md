@@ -43,12 +43,12 @@ is, leaves are not necessarily less than branches and vice versa.
    [Map](https://hackage.haskell.org/package/containers-0.4.0.0/docs/Data-Map.html)
    from unique values in the data (the type of these values is `Char`
    in the example above but it could be any type in the `Ord`
-   typeclass). Then, for every element in the input we want to do one
-   of two things: if it is the first time we have seen it, insert it
-   as a new key in the map with the value 1, or, if this is already a
-   key in the map, increase the count by 1. We could do this with an
-   `if` statement but there is a function in the Map library that does
-   just what we need:
+   typeclass) to their frequencies. Then, for every element in the
+   input we want to do one of two things: if it is the first time we
+   have seen it, insert it as a new key in the map with the value 1,
+   or, if this is already a key in the map, increase the count
+   by 1. We could do this with an `if` statement but there is a
+   function in the Map library that does just what we need:
    [`insertWith`](https://hackage.haskell.org/package/containers-0.4.0.0/docs/Data-Map.html#v:insertWith).
 
    Having created the map, we can extract the `(key, value)` pairs
